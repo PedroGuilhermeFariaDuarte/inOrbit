@@ -1,7 +1,9 @@
-import { timestamp } from "drizzle-orm/pg-core";
+import { generatedID } from "app/utils/Identifications";
+import { text, timestamp } from "drizzle-orm/pg-core";
 
 
 export const DEFAULT_COLUMNS = {
+    id: text('id').primaryKey().$defaultFn(() => generatedID()),
     createdAt: timestamp('created_at', {
         withTimezone: true
     }).defaultNow(),

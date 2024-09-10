@@ -4,19 +4,23 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server:init": "tsx --env-file .env watch ./src/server/index.ts",
+    "server:start": "tsx watch --env-file .env ./src/server/index.ts",
     "db:schema": "npx drizzle-kit generate --config=./src/app/database/drizzle.config.ts",
-    "db:drop": "npx drizzle-kit drop --config=./src/app/database/drizzle.config.ts",
+    "db:drop": "npx  drizzle-kit drop --config=./src/app/database/drizzle.config.ts",
     "db:migrate": "npx drizzle-kit migrate --config=./src/app/database/drizzle.config.ts",
-    "db:studio": "npx drizzle-kit studio --config=./src/app/database/drizzle.config.ts"
+    "db:studio": "npx drizzle-kit studio --config=./src/app/database/drizzle.config.ts",
+    "db:seed": "tsx --env-file .env ./src/app/database/seeds/index.ts "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dayjs": "^1.11.13",
     "drizzle-orm": "^0.33.0",
     "fastify": "^4.28.1",
+    "fastify-type-provider-zod": "^2.0.0",
+    "nanoid": "^5.0.7",
     "postgres": "^3.4.4",
     "tsx": "^4.19.0",
     "zod": "^3.23.8"
