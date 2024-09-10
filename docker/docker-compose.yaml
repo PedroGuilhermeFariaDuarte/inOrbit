@@ -1,0 +1,13 @@
+version: "1"
+
+name: inorbit-server-api
+
+services:
+  inorbitDB:
+    image: bitnami/postgresql:13.16.0
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRESQL_USERNAME=inorbitDB
+      - POSTGRESQL_PASSWORD=inorbitDB
+      - POSTGRESQL_DATABASE=inorbit
