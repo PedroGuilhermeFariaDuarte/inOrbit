@@ -3,6 +3,7 @@ import { serializerCompiler, validatorCompiler, ZodTypeProvider } from "fastify-
 
 // Modules Routes
 import { setGoalRoutes } from "app/modules/Goal/Routes";
+import { setGoalCompletionsRoutes } from "app/modules/GoalCompletion/Routes";
 
 
 const APP_STATEMENT = fastify({
@@ -15,6 +16,7 @@ APP_STATEMENT.setSerializerCompiler(serializerCompiler);
 
 // Routes
 setGoalRoutes(APP_STATEMENT);
+setGoalCompletionsRoutes(APP_STATEMENT);
 
 APP_STATEMENT.listen({
     port: 3333

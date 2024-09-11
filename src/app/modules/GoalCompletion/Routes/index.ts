@@ -5,7 +5,7 @@ import * as Zod from "zod";
 // Controller
 import { Controller } from "../Controllers";
 
-export function setGoalRoutes(server: FastifyInstance) {
+export function setGoalCompletionsRoutes(server: FastifyInstance) {
     try {
         server.withTypeProvider<ZodTypeProvider>().route({
             url: '/goals-completions/create',
@@ -20,13 +20,13 @@ export function setGoalRoutes(server: FastifyInstance) {
             }
         })        
 
-        // server.withTypeProvider<ZodTypeProvider>().route({
-        //     url: '/goals/pendings',
-        //     method: 'GET',
-        //     handler: async (request, response) => {
-        //         await new Controller().getAllPendings(request, response);
-        //     }
-        // })
+        server.withTypeProvider<ZodTypeProvider>().route({
+            url: '/goals-completions/remove',
+            method: 'DELETE',
+            handler: async (request, response) => {
+                // await new Controller().getAllPendings(request, response);
+            }
+        })
     } catch (error) {
         throw error
     }
