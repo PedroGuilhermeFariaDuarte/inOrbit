@@ -64,6 +64,7 @@ export async function getWeekSummary() {
                             'title', ${GOAL_COMPLETED_IN_WEEK.title},
                             'completedAt', ${GOAL_COMPLETED_IN_WEEK.completedAt}
                         )
+                        ORDER BY ${GOAL_COMPLETED_IN_WEEK.completedAt} DESC
                     )
                 `.as('completions')
             })
