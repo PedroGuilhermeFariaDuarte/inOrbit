@@ -49,15 +49,13 @@ export async function createGoalCompletion(data: ICreateGoalCompletionsData) {
             })
             .from(goals)
             .leftJoin(GOAL_COMPLETION_COUNTS, eq(GOAL_COMPLETION_COUNTS.goalId, data.goalId))
-            .where(eq(goals.id, data.goalId)))[0]
+            .where(eq(goals.id, data.goalId)))[0];
 
-
-            if(RESULT.completionCount >= RESULT.desiredWeeklyFrequency) {
-                throw new Error('The goal already completed this week');
-            }else{
-                return (await DRIZZLE_CLIENT.insert(goalsCompletions).values(data).returning())[0] || null
-            }
-        return RESULT;
+        if(RESULT.completionCount >= RESULT.desiredWeeklyFrequency) {
+            throw new Error('The goal already completed this week');
+        }else{
+            return (await DRIZZLE_CLIENT.insert(goalsCompletions).values(data).returning())[0] || null
+        }
     } catch (error) {
         setLogger(error)
         throw error;

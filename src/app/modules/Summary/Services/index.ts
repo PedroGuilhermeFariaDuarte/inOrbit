@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { and, eq, gte, lte, sql } from "drizzle-orm";
+import { and, desc, eq, gte, lte, sql } from "drizzle-orm";
 
 // Database
 import { DRIZZLE_CLIENT } from "app/database";
@@ -43,13 +43,14 @@ export async function getWeekSummary() {
                 `.as('completedAtDate')
             })
             .from(goalsCompletions)
-            .innerJoin(goals, eq(goals.id, goalsCompletions.goalId))
+            .innerJoin(goals, eq(goals.id, goalsCompletions.goalId))            
             .where(
                 and(
                     gte(goalsCompletions.createdAt,firstDayOfWeek),
                 lte(goalsCompletions.createdAt, lastDayOfWeek)
                 )
             )
+            .orderBy(goalsCompletions.createdAt)
         )
 
         const GOALS_COMPLETED_BY_WEEK_DAY = DRIZZLE_CLIENT.$with('goals_completed_by_week_day').as(
@@ -68,6 +69,7 @@ export async function getWeekSummary() {
             })
             .from(GOAL_COMPLETED_IN_WEEK)
             .groupBy(GOAL_COMPLETED_IN_WEEK.completedAtDate)
+            .orderBy(desc(GOAL_COMPLETED_IN_WEEK.completedAtDate))
         )
 
         const RESULT = DRIZZLE_CLIENT.with(
@@ -82,7 +84,7 @@ export async function getWeekSummary() {
                 JSON_OBJECT_AGG(
                     ${GOALS_COMPLETED_BY_WEEK_DAY.completedAtDate}, 
                     ${GOALS_COMPLETED_BY_WEEK_DAY.completions}
-                )
+                ) 
             `
         })
         .from(GOALS_COMPLETED_BY_WEEK_DAY)

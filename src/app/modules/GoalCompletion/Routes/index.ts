@@ -12,7 +12,16 @@ export function setGoalCompletionsRoutes(server: FastifyInstance) {
             method: 'POST',
             schema: {
                 body: Zod.object({
-                    goalId: Zod.string(),
+                    goalId: Zod.string({
+                        coerce: true,
+                        invalid_type_error: 'The data should be a string',
+                        message: "The goal ID is necessary",
+                        required_error: 'The goal ID is necessary',
+                        description: 'The goal ID is necessary',                        
+                    }),
+                }, {
+                    invalid_type_error: 'The data should be a object',
+                    message: 'The data should be a object with goal ID'
                 })
             },
             handler: async (request, response) => {

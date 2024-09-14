@@ -4,7 +4,6 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { getWeekSummary } from "../Services";
 
 // Types
-import { ICreateGoalCompletionsData } from "../types";
 
 export class Controller {
     constructor() {
@@ -15,12 +14,12 @@ export class Controller {
         try {
             const SUMMARY_WEEK = await getWeekSummary();
 
-            if(!SUMMARY_WEEK) {
+            if(!SUMMARY_WEEK || SUMMARY_WEEK.length <= 0) {
                 response.status(500).send("The summary can not be generate");
                 return;
             }
 
-            response.status(201).send(SUMMARY_WEEK);
+            response.status(200).send(SUMMARY_WEEK[0]);
         } catch (error) {
             throw error;
         }
